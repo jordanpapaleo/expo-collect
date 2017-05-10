@@ -1,25 +1,38 @@
-import React, {Component} from 'react'
-import {StyleSheet, Text, View} from 'react-native'
+import React from 'react'
+import Main from './src/Main'
+import {configureStore} from './src/store'
+import {Provider} from 'react-redux'
 
-export default class App extends Component {
-  styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center'
+let initialState = {
+  properties: {
+    local: [],
+    cloud: [],
+    loading: []
+  },
+  app: {
+    activeCaptureId: null,
+    activeHotspotId: null,
+    activeFloorPlanId: null,
+    activeRoomId: null,
+    modal: {},
+    sessionId: null,
+    settings: {
+      invertControls: true,
+      autoSave: true
     }
-  })
-
-  doStuff = () => {
-    console.log('Here')
-  }
-
-  render () {
-    return (
-      <View style={this.styles.container}>
-        <Text>Travis is a BUM!</Text>
-      </View>
-    )
   }
 }
+
+const store = configureStore(initialState)
+store.dispatch({
+  type: 'TEST',
+  payload: true
+})
+
+const App = () => (
+  <Provider store={store}>
+    <Main />
+  </Provider>
+)
+
+export default App

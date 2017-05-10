@@ -33,7 +33,8 @@
     "expect": true,
     "beforeEach": true,
     "afterEach": true,
-    "React": true
+    "React": true,
+    "__DEV__": true
   },
   "rules": {}
 }

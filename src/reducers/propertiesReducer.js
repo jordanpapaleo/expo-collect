@@ -1,0 +1,64 @@
+import {
+  CLOUD_PROPERTIES,
+  DELETE_LOCAL_PROPERTY,
+  LOCAL_PROPERTIES,
+  NEW_LOCAL_PROPERTY,
+  PROPERTY_XFER_COMPLETE,
+  PROPERTY_XFER_START,
+  ADD_CLOUD_PROPERTIES,
+  REMOVE_CLOUD_PROPERTY
+} from '../constants/actionTypes'
+
+// Arrays of string property ids
+const initialState = {
+  local: [],
+  cloud: [],
+  loading: []
+}
+
+export default function properties (state = initialState, action) {
+  switch (action.type) {
+    case LOCAL_PROPERTIES:
+      return {
+        ...state,
+        local: action.payload
+      }
+    case NEW_LOCAL_PROPERTY:
+      return {
+        ...state,
+        local: state.local.concat(action.payload)
+      }
+    case DELETE_LOCAL_PROPERTY:
+      return {
+        ...state,
+        local: state.local.filter(localPropId => localPropId !== action.payload)
+      }
+    case CLOUD_PROPERTIES:
+      return {
+        ...state,
+        cloud: action.payload
+      }
+    case ADD_CLOUD_PROPERTIES:
+      return {
+        ...state,
+        cloud: state.cloud.concat(action.payload)
+      }
+    case REMOVE_CLOUD_PROPERTY:
+      return {
+        ...state,
+        cloud: state.cloud.filter(cloudPropId => cloudPropId !== action.payload)
+      }
+    case PROPERTY_XFER_START:
+      return {
+        ...state,
+        loading: state.loading.concat(action.payload)
+      }
+    case PROPERTY_XFER_COMPLETE:
+      return {
+        ...state,
+        loading: state.loading.filter(loadingPropId => loadingPropId !== action.payload)
+      }
+    default:
+      return state
+  }
+}
