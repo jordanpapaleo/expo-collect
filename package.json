@@ -1,0 +1,38 @@
+{
+  "name": "karma",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
+  "scripts": {
+    "start": "react-native-scripts start",
+    "eject": "react-native-scripts eject",
+    "android": "react-native-scripts android",
+    "ios": "react-native-scripts ios",
+    "test": "npm run test:lint",
+    "test:lint": "./node_modules/.bin/eslint . --color",
+    "test:unit": "node node_modules/.bin/jest",
+    "test:watch": "node node_modules/.bin/jest --watch"
+  },
+  "jest": {
+    "preset": "jest-expo"
+  },
+  "dependencies": {
+    "expo": "^16.0.0",
+    "prop-types": "^15.5.9",
+    "react": "16.0.0-alpha.6",
+    "react-native": "^0.43.4"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-node": "^4.2.2",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^7.0.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "eslint": "^3.19.0",
+    "jest-expo": "^0.4.0",
+    "react-native-scripts": "0.0.29",
+    "react-test-renderer": "16.0.0-alpha.6"
+  }
+}
