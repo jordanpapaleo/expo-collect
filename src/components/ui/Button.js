@@ -2,8 +2,7 @@ import React from 'react'
 import {Text, TouchableHighlight} from 'react-native'
 import PropTypes from 'prop-types'
 
-const Button = () => {
-  const {children, cb} = this.props
+const Button = ({children, cb}) => {
   return (
     <TouchableHighlight onPress={cb.bind(this)}>
       <Text>{children}</Text>
