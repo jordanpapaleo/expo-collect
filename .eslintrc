@@ -34,7 +34,8 @@
     "beforeEach": true,
     "afterEach": true,
     "React": true,
-    "__DEV__": true
+    "__DEV__": true,
+    "fetch": true
   },
   "rules": {}
 }
