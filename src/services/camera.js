@@ -7,25 +7,25 @@ const api = new Api(cameraUrl)
 export function getCameraInfo () {
   return new Promise((resolve, reject) => {
     oscGetCameraInfo()
-    .then((cameraInfo) => {
-      console.log('cameraInfo', cameraInfo)
-      oscStartSession().then(
-        (data) => {
-          console.log('oscStartSession results', data)
-          resolve({
-            cameraInfo,
-            sessionId: data.results.sessionId
-          })
-        },
-        err => { reject(err) }
-      )
-    })
-    .catch((err) => {
-      console.error(err)
-      if (err.error.name === 'FetchError' && err.error.type === 'request-timeout') {
-        reject(new Error('Not connected to camera'))
-      }
-    })
+      .then((cameraInfo) => {
+        console.log('cameraInfo', cameraInfo)
+        oscStartSession().then(
+          (data) => {
+            console.log('oscStartSession results', data)
+            resolve({
+              cameraInfo,
+              sessionId: data.results.sessionId
+            })
+          },
+          err => { reject(err) }
+        )
+      })
+      .catch((err) => {
+        console.error(err)
+        if (err.error.name === 'FetchError' && err.error.type === 'request-timeout') {
+          reject(new Error('Not connected to camera'))
+        }
+      })
   })
 }
 

@@ -1,3 +1,4 @@
+import cloneDeep from 'lodash/cloneDeep'
 import {
   ADD_FLOORPLAN,
   DELETE_FLOORPLAN,
@@ -6,7 +7,6 @@ import {
   UPDATE_FLOORPLAN_DELETEROOM,
   UPDATE_FLOORPLAN_UPDATEROOM
 } from '../constants/actionTypes'
-import cloneDeep from 'lodash/cloneDeep'
 
 const initialState = []
 
@@ -36,8 +36,8 @@ function newFloorPlan (state, floorplan) {
 }
 
 function addRoom (state, payload) {
-  const {id: floorplanId, value: roomId} = payload
   const floorplans = cloneDeep(state)
+  const {id: floorplanId, value: roomId} = payload
   const floorplan = floorplans.find(floorplan => floorplan.id === floorplanId)
 
   if (floorplan) {
@@ -48,8 +48,8 @@ function addRoom (state, payload) {
 }
 
 function deleteRoom (state, payload) {
-  const {id: floorplanId, value: roomId} = payload
   const floorplans = cloneDeep(state)
+  const {id: floorplanId, value: roomId} = payload
   const floorplan = floorplans.find(floorplan => floorplan.id === floorplanId)
 
   if (floorplan) {
@@ -60,8 +60,7 @@ function deleteRoom (state, payload) {
 }
 
 function updateRoom (state, payload) {
-  const floorplans = cloneDeep(state)
-  return floorplans
+  return cloneDeep(state)
 }
 
 function deleteFloorPlan (state, id) {
