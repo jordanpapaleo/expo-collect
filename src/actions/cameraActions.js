@@ -1,4 +1,4 @@
-import {getCameraInfo} from '../services/camera'
+import camera from '../services/camera'
 import {setSpinner} from './appActions'
 import {addNotification, updateNotification} from './notificationActions'
 import {
@@ -6,7 +6,7 @@ import {
   SESSION
 } from '../constants/actionTypes'
 
-export function checkSession () {
+export function getCameraInfo () {
   return dispatch => {
     const notification = {
       type: 'info',
@@ -16,9 +16,8 @@ export function checkSession () {
 
     dispatch(addNotification(notification))
 
-    getCameraInfo().then(
+    camera.getInfo().then(
       (data) => {
-        console.log('checkSession', data)
         dispatch({
           type: CAMERA_INFO,
           payload: data.cameraInfo
@@ -48,7 +47,17 @@ export function checkSession () {
 }
 
 export function takePicture () {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const state = getState()
     dispatch(setSpinner(true))
+
+    camera.takePicture(state.camera.sessionId).then(
+      (data) => {
+        console.log('ACTION: take picture', data)
+      },
+      (err) => {
+        console.error('ACTION:  take picture', err)
+      }
+    )
   }
 }
