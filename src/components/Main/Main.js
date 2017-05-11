@@ -7,14 +7,14 @@ import {connect} from 'react-redux'
 import mainStyles from './main.styles'
 import {Button} from '../ui'
 import TestView from '../TestView'
-import {checkSession} from '../../actions/cameraActions'
+import {getCameraInfo, takePicture} from '../../actions/cameraActions'
 
 const mapStateToProps = state => ({
   properties: state.properties
 })
 
 const mapDispatchToProps = dispatch => (bindActionCreators({
-  checkSession
+  getCameraInfo, takePicture
 }, dispatch))
 @connect(mapStateToProps, mapDispatchToProps)
 class MainComponent extends Component {
@@ -39,17 +39,14 @@ class MainComponent extends Component {
     navigate('Test')
   }
 
-  testCamera = () => {
-    this.props.checkSession()
-  }
-
   render () {
-    console.log('this.props', this.props)
+    const {getCameraInfo, takePicture} = this.props
     return (
       <View style={this.styles.container}>
         <Text>Travis is a BUM!</Text>
         <Button cb={this.goPlaces}>Go</Button>
-        <Button cb={this.testCamera}>Test Camera</Button>
+        <Button cb={getCameraInfo}>Get Camera Info</Button>
+        <Button cb={takePicture}>Take Picture</Button>
       </View>
     )
   }

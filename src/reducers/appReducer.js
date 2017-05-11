@@ -1,44 +1,32 @@
+import cloneDeep from 'lodash/cloneDeep'
 import {
   ACTIVE_CAPTURE,
   ACTIVE_FLOORPLAN,
   ACTIVE_HOTSPOT,
   ACTIVE_ROOM,
-  AUTO_SAVE,
-  CAMERA_INFO,
-  CLEAR_MODAL,
-  INVERT_CONTROLS,
   LOADING,
-  MODAL,
+  RESET_APP,
   ROTATION,
-  SESSION
+  SETTING_AUTO_SAVE,
+  SETTING_INVERT_CONTROLS
 } from '../constants/actionTypes'
-import cloneDeep from 'lodash/cloneDeep'
 
 const initialState = {
   activeCaptureId: null,
   activeHotspotId: null,
   activeFloorPlanId: null,
   activeRoomId: null,
-  cameraInfo: {},
-  sessionId: null,
+  loading: false,
   settings: {
+    autoSave: true,
     invertControls: false
-  },
-  loading: false
+  }
 }
 
 export default function app (state = initialState, action) {
-  console.debug(action.type)
-  const stateClone = cloneDeep(state)
-
   switch (action.type) {
-    case 'RESET_APP':
-      return {
-        ...initialState,
-        settings: {
-          ...cloneDeep(state).settings
-        }
-      }
+    case RESET_APP:
+      return cloneDeep(initialState)
     case LOADING:
       return {
         ...cloneDeep(state),
@@ -69,45 +57,14 @@ export default function app (state = initialState, action) {
         ...cloneDeep(state),
         cameraRotation: action.payload
       }
-    case CAMERA_INFO:
-      return {
-        ...stateClone,
-        cameraInfo: action.payload
-      }
-    case CLEAR_MODAL:
-      return {
-        ...stateClone,
-        modal: action.payload
-      }
-    case INVERT_CONTROLS:
-      return {
-        ...stateClone,
-        settings: {
-          ...cloneDeep(stateClone.settings),
-          invertControls: action.payload
-        }
-      }
-    case AUTO_SAVE:
-      return {
-        ...stateClone,
-        settings: {
-          ...cloneDeep(stateClone.settings),
-          autoSave: action.payload
-        }
-      }
-    case MODAL:
-      return {
-        ...stateClone,
-        modal: {
-          ...stateClone.modal,
-          ...action.payload
-        }
-      }
-    case SESSION:
-      return {
-        ...cloneDeep(state),
-        sessionId: action.payload
-      }
+    case SETTING_INVERT_CONTROLS:
+      const invertControlState = cloneDeep(state)
+      invertControlState.settings.invertControls = action.payload
+      return invertControlState
+    case SETTING_AUTO_SAVE:
+      const autoSaveState = cloneDeep(state)
+      autoSaveState.settings.autoSave = action.payload
+      return autoSaveState
     default:
       return state
   }

@@ -1,3 +1,4 @@
+import cloneDeep from 'lodash/cloneDeep'
 import {
   CLOUD_PROPERTIES,
   DELETE_LOCAL_PROPERTY,
@@ -20,42 +21,42 @@ export default function properties (state = initialState, action) {
   switch (action.type) {
     case LOCAL_PROPERTIES:
       return {
-        ...state,
+        ...cloneDeep(state),
         local: action.payload
       }
     case NEW_LOCAL_PROPERTY:
       return {
-        ...state,
+        ...cloneDeep(state),
         local: state.local.concat(action.payload)
       }
     case DELETE_LOCAL_PROPERTY:
       return {
-        ...state,
+        ...cloneDeep(state),
         local: state.local.filter(localPropId => localPropId !== action.payload)
       }
     case CLOUD_PROPERTIES:
       return {
-        ...state,
+        ...cloneDeep(state),
         cloud: action.payload
       }
     case ADD_CLOUD_PROPERTIES:
       return {
-        ...state,
+        ...cloneDeep(state),
         cloud: state.cloud.concat(action.payload)
       }
     case REMOVE_CLOUD_PROPERTY:
       return {
-        ...state,
+        ...cloneDeep(state),
         cloud: state.cloud.filter(cloudPropId => cloudPropId !== action.payload)
       }
     case PROPERTY_XFER_START:
       return {
-        ...state,
+        ...cloneDeep(state),
         loading: state.loading.concat(action.payload)
       }
     case PROPERTY_XFER_COMPLETE:
       return {
-        ...state,
+        ...cloneDeep(state),
         loading: state.loading.filter(loadingPropId => loadingPropId !== action.payload)
       }
     default:
