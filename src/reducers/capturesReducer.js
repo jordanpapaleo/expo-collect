@@ -16,21 +16,20 @@ export default function captures (state = initialState, action) {
     case DELETE_CAPTURE:
       return deleteCapture(state, action.payload)
     case UPDATE_CAPTURE:
-      return updateCapture(state, action.payload)
+      const {captureId, updates} = action.payload
+      return updateCapture(state, captureId, updates)
     default:
       return state
   }
 }
 
-function addCapture (state, payload) {
-  const {capture} = payload
+function addCapture (state, capture) {
   const captures = cloneDeep(state)
   captures.push(capture)
   return captures
 }
 
-function updateCapture (state, payload) {
-  const {captureId, updates} = payload
+function updateCapture (state, captureId, updates) {
   const captures = cloneDeep(state)
   const capture = captures.find(capture => capture.id === captureId)
 
@@ -47,7 +46,7 @@ function updateCapture (state, payload) {
   return captures
 }
 
-function deleteCapture (state, payload) {
+function deleteCapture (state, captureId) {
   const captures = cloneDeep(state)
-  return captures.filter(capture => capture.id !== payload.captureId)
+  return captures.filter(capture => capture.id !== captureId)
 }

@@ -63,7 +63,6 @@ class MainComponent extends Component {
 
     return (
       <View style={this.styles.container}>
-        <Text>Travis is a BUM!</Text>
         <View style={{display: 'flex', flexDirection: 'row'}}>
           <Button cb={this.goPlaces}>Go View</Button>
           <Button cb={() => { navigate('TestFloorPlans') }}>Floorplans</Button>
