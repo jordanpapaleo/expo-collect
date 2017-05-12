@@ -6,11 +6,7 @@ import {
   HOTSPOT
 } from '../constants/actionTypes'
 
-const initialState = {
-  blurs: [],
-  info: [],
-  move: []
-}
+const initialState = []
 
 export default function hotspots (state = initialState, action) {
   switch (action.type) {
@@ -25,6 +21,14 @@ export default function hotspots (state = initialState, action) {
     default:
       return state
   }
+}
+
+function addHotspot (state, payload) {
+  const hotspots = cloneDeep(state)
+}
+
+function deleteHotspot (state, payload) {
+  const hotspots = cloneDeep(state)
 }
 
 function addBlur (state, payload) {

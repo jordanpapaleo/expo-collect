@@ -15,8 +15,8 @@ export function configureStore (initialState = {}) {
   const store = createStore(rootReducer, initialState, compose(...enhancers))
 
   store.subscribe(() => {
-    const state = store.getState()
-    console.log(state)
+    // const state = store.getState()
+    // console.info('state', state)
   })
 
   return store

@@ -10,6 +10,7 @@ import TestView from '../TestView'
 import TestCaptures from '../TestCaptures'
 import TestFloorPlans from '../TestFloorPlans'
 import TestHotspots from '../TestHotspots'
+import TestScreenShots from '../TestScreenShots'
 import TestRooms from '../TestRooms'
 import {getCameraInfo, takePicture} from '../../actions/cameraActions'
 import {propertyStore} from '../../services/localStorage'
@@ -28,6 +29,8 @@ class MainComponent extends Component {
   }
 
   static propTypes = {
+    getCameraInfo: PropTypes.func.isRequired,
+    takePicture: PropTypes.func.isRequired,
     navigation: PropTypes.shape({
       dispatch: PropTypes.func.isRequired,
       goBack: PropTypes.func.isRequired,
@@ -43,7 +46,7 @@ class MainComponent extends Component {
 
   componentDidMount () {
     propertyStore.get('property-1234').then((data) => {
-      console.log('PLOP', data)
+      // console.log('PLOP', data)
     })
   }
 
@@ -61,12 +64,15 @@ class MainComponent extends Component {
     return (
       <View style={this.styles.container}>
         <Text>Travis is a BUM!</Text>
-        <Button cb={this.goPlaces}>Go View</Button>
         <View style={{display: 'flex', flexDirection: 'row'}}>
+          <Button cb={this.goPlaces}>Go View</Button>
           <Button cb={() => { navigate('TestFloorPlans') }}>Floorplans</Button>
           <Button cb={() => { navigate('TestRooms') }}>Rooms</Button>
+        </View>
+        <View style={{display: 'flex', flexDirection: 'row'}}>
           <Button cb={() => { navigate('TestCaptures') }}>Captures</Button>
           <Button cb={() => { navigate('TestHotspots') }}>Hotspots</Button>
+          <Button cb={() => { navigate('TestScreenShots') }}>Screenshots</Button>
         </View>
         <View style={{display: 'flex', flexDirection: 'row'}}>
           <Button cb={getCameraInfo}>Get Camera Info</Button>
@@ -83,7 +89,8 @@ const Main = StackNavigator({
   TestCaptures: {screen: TestCaptures},
   TestFloorPlans: {screen: TestFloorPlans},
   TestHotspots: {screen: TestHotspots},
-  TestRooms: {screen: TestRooms}
+  TestRooms: {screen: TestRooms},
+  TestScreenShots: {screen: TestScreenShots}
 })
 
 export default Main

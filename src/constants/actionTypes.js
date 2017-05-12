@@ -59,4 +59,4 @@ export const UPDATE_ROOM = 'UPDATE_ROOM'
 
 // Screenshots
 export const DELETE_SCREENSHOT = 'DELETE_SCREENSHOT'
-export const SCREENSHOT = 'SCREENSHOT'
+export const ADD_SCREENSHOT = 'ADD_SCREENSHOT'

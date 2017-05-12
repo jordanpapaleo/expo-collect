@@ -1,15 +1,15 @@
 import cloneDeep from 'lodash/cloneDeep'
 import {
-  DELETE_SCREENSHOT,
-  SCREENSHOT
+  ADD_SCREENSHOT,
+  DELETE_SCREENSHOT
 } from '../constants/actionTypes'
 
 const initialState = []
 
 export default function screenshots (state = initialState, action) {
   switch (action.type) {
-    case SCREENSHOT:
-      return saveScreenshot(state, action.payload)
+    case ADD_SCREENSHOT:
+      return addScreenShot(state, action.payload)
     case DELETE_SCREENSHOT:
       return deleteScreenshot(state, action.payload)
     default:
@@ -17,16 +17,17 @@ export default function screenshots (state = initialState, action) {
   }
 }
 
-function saveScreenshot (state, payload) {
-  const rooms = cloneDeep(state)
-  const room = rooms.find(room => room.id === payload.roomId)
-  room.screenshots = room.screenshots || []
-  room.screenshots.push(payload.screenshot)
+function addScreenShot (state, payload) {
+  const screenshots = cloneDeep(state)
+  screenshots.push(payload.screenshot)
+  // const room = rooms.find(room => room.id === payload.roomId)
+  // room.screenshots = room.screenshots || []
+  // room.screenshots.push(payload.screenshot)
   return rooms
 }
 
 function deleteScreenshot (state, payload) {
-  const rooms = cloneDeep(state)
+  const screenshots = cloneDeep(state)
   const {roomId, screenshot: {id: screenshotId}} = payload
   const room = rooms.find(room => room.id === roomId)
 
