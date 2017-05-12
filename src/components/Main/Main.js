@@ -1,17 +1,19 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {StyleSheet, Text, View} from 'react-native'
+import {StyleSheet, View} from 'react-native'
 import {StackNavigator} from 'react-navigation'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import mainStyles from './main.styles'
 import {Button} from '../ui'
-import TestView from '../TestView'
-import TestCaptures from '../TestCaptures'
-import TestFloorPlans from '../TestFloorPlans'
-import TestHotspots from '../TestHotspots'
-import TestScreenShots from '../TestScreenShots'
-import TestRooms from '../TestRooms'
+import {
+  TestCaptures,
+  TestFloorPlans,
+  TestHotspots,
+  TestRooms,
+  TestScreenShots,
+  TestView
+} from '../TestView'
 import {getCameraInfo, takePicture} from '../../actions/cameraActions'
 import {propertyStore} from '../../services/localStorage'
 
