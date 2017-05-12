@@ -12,17 +12,18 @@ export function newFloorPlan () {
   return [
     {
       type: ADD_FLOORPLAN,
-      payload: {floorplan}
+      payload: floorplan
     },
     setActiveFloorPlan(floorplan.id)
   ]
 }
 
 export function deleteFloorPlan (floorplanId) {
+  console.log('DELETE', floorplanId)
   return [
     {
       type: DELETE_FLOORPLAN,
-      payload: {floorplanId}
+      payload: floorplanId
     },
     setActiveFloorPlan(null)
   ]

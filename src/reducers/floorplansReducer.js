@@ -16,7 +16,8 @@ export default function floorplan (state = initialState, action) {
     case DELETE_FLOORPLAN:
       return deleteFloorPlan(state, action.payload)
     case UPDATE_FLOORPLAN:
-      return updateFloorplan(state, action.payload)
+      const {floorplanId, updates} = action.payload
+      return updateFloorplan(state, floorplanId, updates)
     default:
       return state
   }
@@ -28,13 +29,12 @@ function addFloorPlan (state, floorplan) {
   return floorplans
 }
 
-function deleteFloorPlan (state, id) {
+function deleteFloorPlan (state, floorplanId) {
   const floorplans = cloneDeep(state)
-  return floorplans.filter(floorplan => floorplan.id !== id)
+  return floorplans.filter(floorplan => floorplan.id !== floorplanId)
 }
 
-function updateFloorplan (state, payload) {
-  const {floorplanId, updates} = payload
+function updateFloorplan (state, floorplanId, updates) {
   const floorplans = cloneDeep(state)
   const floorplan = floorplans.find(floorplan => floorplan.id === floorplanId)
 
