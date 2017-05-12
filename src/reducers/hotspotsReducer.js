@@ -8,7 +8,8 @@ import {
 
 const initialState = {
   blurs: [],
-  info: []
+  info: [],
+  move: []
 }
 
 export default function hotspots (state = initialState, action) {
