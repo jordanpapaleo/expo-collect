@@ -26,8 +26,7 @@ const initialState = {
   hotspots: sampleData.hotspots.map(hotspot => new Hotspot(hotspot)),
   screenshots: sampleData.screenshots.map(screenshot => new Screenshot(screenshot))
 }
-
-console.log('initialState', initialState)
+// console.log(JSON.stringify(initialState, null, 2))
 
 const store = configureStore(initialState)
 const App = () => (
