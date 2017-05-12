@@ -13,7 +13,8 @@ export default function hotspots (state = initialState, action) {
     case ADD_HOTSPOT:
       return addHotspot(state, action.payload)
     case UPDATE_HOTSPOT:
-      return updateHotspot(state, action.payload)
+      const {hotspotId, updates} = action.payload
+      return updateHotspot(state, hotspotId, updates)
     case DELETE_HOTSPOT:
       return deleteHotspot(state, action.payload)
     default:
@@ -21,14 +22,13 @@ export default function hotspots (state = initialState, action) {
   }
 }
 
-function addHotspot (state, payload) {
+function addHotspot (state, hotspot) {
   const hotspots = cloneDeep(state)
-  hotspots.push(payload.hotspot)
+  hotspots.push(hotspot)
   return hotspots
 }
 
-function updateHotspot (state, payload) {
-  const {hotspotId, updates} = payload
+function updateHotspot (state, hotspotId, updates) {
   const hotspots = cloneDeep(state)
   const hotspot = hotspots.find(hotspot => hotspot.id === hotspotId)
 
@@ -41,7 +41,7 @@ function updateHotspot (state, payload) {
   return hotspots
 }
 
-function deleteHotspot (state, payload) {
+function deleteHotspot (state, hotspotId) {
   const hotspots = cloneDeep(state)
-  return hotspots.filter(hotspot => hotspot.id !== payload.hotspotId)
+  return hotspots.filter(hotspot => hotspot.id !== hotspotId)
 }

@@ -1,39 +1,61 @@
 import React, {Component} from 'react'
-import {StyleSheet, Text, ListView} from 'react-native'
+import {StyleSheet, Text, View} from 'react-native'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import {Button} from './ui'
+import {addHotspot, deleteHotspot, updateHotspot} from '../actions/hotspotActions'
 
 const mapStateToProps = state => ({
   hotspots: state.hotspots
 })
-const mapDispatchToProps = dispatch => (bindActionCreators({}, dispatch))
+const mapDispatchToProps = dispatch => (bindActionCreators({
+  addHotspot, deleteHotspot, updateHotspot
+}, dispatch))
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class TestHotspots extends Component {
-  static propTypes = {}
+  static propTypes = {
+    hotspots: PropTypes.array,
+    addHotspot: PropTypes.func,
+    deleteHotspot: PropTypes.func,
+    updateHotspot: PropTypes.func
+  }
 
-  constructor (props) {
-    super(props)
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
-    this.state = {
-      dataSource: ds.cloneWithRows(this.props.hotspots)
-    }
+  add = () => {
+    this.props.addHotspot({
+      type: 'info'
+    }, 'capture-Front-Door-capture-1')
+  }
+
+  update = (captureId) => {
+    this.props.updateHotspot(captureId, {
+      meta: {description: 'SHHHHHHH'}
+    })
+  }
+
+  delete = (captureId) => {
+    this.props.deleteHotspot(captureId, 'room-1493925821533')
   }
 
   render () {
-    const {dataSource} = this.state
-    console.log('dataSource', dataSource)
+    const {hotspots} = this.props
     return (
-      <ListView
-        style={styles.container}
-        dataSource={dataSource}
-        renderRow={(rowData) => <Text>{rowData.id}</Text>}
-      />
+      <View>
+        {hotspots.map((hotspot, i) => (
+            <View style={styles.container} key={`hotspot-${i}`}>
+              <Text style={{flexGrow: 1}}>{hotspot.type}</Text>
+              <Button cb={this.update.bind(this, hotspot.id)}>Update</Button>
+              <Button cb={this.delete.bind(this, hotspot.id)}>X</Button>
+            </View>
+          )
+        )}
+        <Button cb={this.add}>Add</Button>
+    </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {}
+  container: {display: 'flex', flexDirection: 'row'}
 })

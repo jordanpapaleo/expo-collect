@@ -24,7 +24,7 @@ export default class TestCapturess extends Component {
 
   add = () => {
     this.props.addCapture({
-      name: 'Cheap floors'
+      name: 'Dining room 1'
     }, 'room-1493925821533')
   }
 

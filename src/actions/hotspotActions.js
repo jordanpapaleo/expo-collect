@@ -4,13 +4,22 @@ import {
   UPDATE_HOTSPOT
 } from '../constants/actionTypes'
 import Hotspot from '../models/Hotspot'
+import {updateCapture} from './captureActions'
 
-export function newHotspot () {
-  const hotspot = new Hotspot()
+export function addHotspot (props, captureId) {
+  const hotspot = new Hotspot(props)
 
-  return {
-    type: ADD_HOTSPOT,
-    payload: {hotspot}
+  return dispatch => {
+    dispatch({
+      type: ADD_HOTSPOT,
+      payload: hotspot
+    })
+
+    if (captureId) {
+      dispatch(updateCapture(captureId, {
+        hotspot: [['add', hotspot.id]]
+      }))
+    }
   }
 }
 
@@ -21,9 +30,17 @@ export function updateHotspot (hotspotId, updates) {
   }
 }
 
-export function deleteHotspot (hotspotId) {
-  return {
-    type: DELETE_HOTSPOT,
-    payload: {hotspotId}
+export function deleteHotspot (hotspotId, captureId) {
+  return dispatch => {
+    dispatch({
+      type: DELETE_HOTSPOT,
+      payload: hotspotId
+    })
+
+    if (captureId) {
+      dispatch(updateCapture(captureId, {
+        hotspot: [['delete', hotspotId]]
+      }))
+    }
   }
 }
