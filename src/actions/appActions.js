@@ -3,8 +3,9 @@ import {
   ACTIVE_FLOORPLAN,
   ACTIVE_HOTSPOT,
   ACTIVE_ROOM,
+  ACTIVE_ROTATION,
   LOADING,
-  ROTATION,
+  RESET_APP,
   SETTING_AUTO_SAVE,
   SETTING_INVERT_CONTROLS
 } from '../constants/actionTypes'
@@ -39,7 +40,7 @@ export function setActiveHotspotId (id) {
 
 export function setRotation (rotation) {
   return {
-    type: ROTATION,
+    type: ACTIVE_ROTATION,
     payload: rotation
   }
 }
@@ -90,20 +91,6 @@ export function saveState () {
   }
 }
 
-// TODO DELETE this spawn of satan
-export function refresh () {
-  return (dispatch, getState) => {
-    const state = getState()
-    const {activeFloorPlanId, settings: {autoSave}} = state.app
-
-    dispatch(setActiveFloorPlan(activeFloorPlanId))
-
-    if (autoSave) {
-      dispatch(saveState())
-    }
-  }
-}
-
 export function setSpinner (spinning) {
   return {
     type: LOADING,
@@ -112,5 +99,5 @@ export function setSpinner (spinning) {
 }
 
 export function resetState () {
-  return { type: 'RESET_APP' }
+  return { type: RESET_APP }
 }

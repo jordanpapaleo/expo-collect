@@ -1,53 +1,44 @@
-import {ADD_FLOORPLAN, DELETE_FLOORPLAN, SET_FLOORPLANS} from '../constants/actionTypes'
-import {setActiveFloorPlan, saveState} from './appActions'
+import {setActiveFloorPlan} from './appActions'
+import Floorplan from '../models/Floorplan'
+import {
+  ADD_FLOORPLAN,
+  DELETE_FLOORPLAN,
+  UPDATE_FLOORPLAN
+} from '../constants/actionTypes'
 
-export function newFloorPlan () {
-  const id = Date.now()
-  const floorplan = {
-    name: `FP-Name-${id}`,
-    id: `floorplan-${id}`,
-    rooms: []
-  }
+export function addFloorPlan () {
+  const floorplan = new Floorplan()
 
   return [
     {
       type: ADD_FLOORPLAN,
       payload: floorplan
     },
-    setActiveFloorPlan(floorplan.id),
-    saveState()
+    setActiveFloorPlan(floorplan.id)
   ]
 }
 
-export function deleteFloorPlan (id) {
+export function deleteFloorPlan (floorplanId) {
+  console.log('DELETE', floorplanId)
   return [
     {
       type: DELETE_FLOORPLAN,
-      payload: id
+      payload: floorplanId
     },
-    setActiveFloorPlan(null),
-    saveState()
+    setActiveFloorPlan(null)
   ]
 }
 
-// keys: ADDROOM, DELETEROOM, UPDATEROOM
-export function updateFloorPlan (id, updates) {
-  console.log('updates', updates)
-  return dispatch => {
-    // Allows for multiple updates to be put in a single object
-    Object.keys(updates).forEach((key) => {
-      dispatch({
-        type: `UPDATE_FLOORPLAN_${key}`,
-        payload: {id, value: updates[key]}
-      })
-    })
+export function updateFloorPlan (floorplanId, updates) {
+  /*
+    updates = {
+      rooms: [['add', 'room-id'], ['delete', 'room-id']],
+      name: 'name'
+    }
   }
-}
-
-// Used to completely replace the floorplans in redux
-export function setFloorPlans (floorplans) {
+  */
   return {
-    type: SET_FLOORPLANS,
-    payload: floorplans
+    type: UPDATE_FLOORPLAN,
+    payload: {floorplanId, updates}
   }
 }

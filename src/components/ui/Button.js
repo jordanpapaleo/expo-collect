@@ -4,7 +4,11 @@ import PropTypes from 'prop-types'
 
 const Button = ({children, cb}) => {
   return (
-    <TouchableHighlight onPress={cb.bind(this)}>
+    <TouchableHighlight onPress={cb.bind(this)} style={{
+      borderWidth: 1,
+      borderColor: 'gray',
+      padding: 10
+    }}>
       <Text>{children}</Text>
     </TouchableHighlight>
   )

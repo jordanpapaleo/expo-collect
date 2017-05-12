@@ -1,60 +1,52 @@
 import cloneDeep from 'lodash/cloneDeep'
 import {
-  CAPTURE_NAME,
-  CAPTURE_NOTE,
-  CAPTURE,
-  DELETE_CAPTURE
+  ADD_CAPTURE,
+  DELETE_CAPTURE,
+  UPDATE_CAPTURE
 } from '../constants/actionTypes'
+import listUtils from '../services/listUtils'
 
+// Array of Capture ()
 const initialState = []
 
 export default function captures (state = initialState, action) {
   switch (action.type) {
-    case CAPTURE:
+    case ADD_CAPTURE:
       return addCapture(state, action.payload)
     case DELETE_CAPTURE:
       return deleteCapture(state, action.payload)
-    case CAPTURE_NOTE:
-      return updateCaptureNote(state, action.payload)
-    case CAPTURE_NAME:
-      return updateCaptureName(state, action.payload)
+    case UPDATE_CAPTURE:
+      const {captureId, updates} = action.payload
+      return updateCapture(state, captureId, updates)
     default:
       return state
   }
 }
 
-function addCapture (state, payload) {
+function addCapture (state, capture) {
   const captures = cloneDeep(state)
-  captures.push(payload)
+  captures.push(capture)
   return captures
 }
 
-function updateCaptureNote (state, payload) {
+function updateCapture (state, captureId, updates) {
   const captures = cloneDeep(state)
-  const capture = captures.find(capture => capture.id === payload.captureId)
+  const capture = captures.find(capture => capture.id === captureId)
 
-  if (capture) {
-    capture.note = {
-      html: payload.noteHTML,
-      markdown: payload.noteMarkdown
-    }
+  if (capture && updates) {
+    Object.keys(updates).forEach((key) => {
+      if (key === 'hotspots' || key === 'screenshots') {
+        capture[key] = listUtils.update(capture[key], updates[key])
+      } else {
+        capture[key] = updates[key]
+      }
+    })
   }
 
   return captures
 }
 
-function updateCaptureName (state, payload) {
+function deleteCapture (state, captureId) {
   const captures = cloneDeep(state)
-  const capture = captures.find(capture => capture.id === payload.captureId)
-
-  if (capture) {
-    capture.name = payload.name
-  }
-
-  return captures
-}
-
-function deleteCapture (state, payload) {
-  const captures = cloneDeep(state)
-  return captures.filter(capture => capture.id !== payload.captureId)
+  return captures.filter(capture => capture.id !== captureId)
 }
