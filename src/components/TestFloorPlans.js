@@ -4,25 +4,25 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {Button} from './ui'
-import {newFloorPlan, deleteFloorPlan, updateFloorPlan} from '../actions/floorplanActions'
+import {addFloorPlan, deleteFloorPlan, updateFloorPlan} from '../actions/floorplanActions'
 
 const mapStateToProps = state => ({
   floorplans: state.floorplans
 })
 const mapDispatchToProps = dispatch => (bindActionCreators({
-  newFloorPlan, deleteFloorPlan, updateFloorPlan
+  addFloorPlan, deleteFloorPlan, updateFloorPlan
 }, dispatch))
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class TestFloorPlans extends Component {
   static propTypes = {
     floorplans: PropTypes.array,
-    newFloorPlan: PropTypes.func,
+    addFloorPlan: PropTypes.func,
     deleteFloorPlan: PropTypes.func,
     updateFloorPlan: PropTypes.func
   }
 
-  updateFloorplan = (floorplanId) => {
+  update = (floorplanId) => {
     this.props.updateFloorPlan(floorplanId, {
       name: 'New Name',
       rooms: [
@@ -33,18 +33,18 @@ export default class TestFloorPlans extends Component {
   }
 
   render () {
-    const {newFloorPlan, deleteFloorPlan, floorplans} = this.props
+    const {addFloorPlan, deleteFloorPlan, floorplans} = this.props
     return (
       <View>
         {floorplans.map((floorplan, i) => (
             <View style={styles.container} key={`floorplan-${i}`}>
               <Text style={{flexGrow: 1}}>{floorplan.name}</Text>
-              <Button cb={this.updateFloorplan.bind(this, floorplan.id)}>Update</Button>
+              <Button cb={this.update.bind(this, floorplan.id)}>Update</Button>
               <Button cb={deleteFloorPlan.bind(this, floorplan.id)}>X</Button>
             </View>
           )
         )}
-        <Button cb={newFloorPlan}>Add</Button>
+        <Button cb={addFloorPlan}>Add</Button>
     </View>
     )
   }

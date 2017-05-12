@@ -1,5 +1,5 @@
 export default class Capture {
-  constructor (props) {
+  constructor (props = {}) {
     this.date = props.date || new Date()
     this.fileName = props.fileName || undefined
     this.hotspots = props.hotspots || []

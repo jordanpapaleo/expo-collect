@@ -4,19 +4,36 @@ import {
   UPDATE_ROOM
 } from '../constants/actionTypes'
 import Room from '../models/Room'
+import {updateFloorPlan} from './floorplanActions'
 
-export function addRoom () {
-  const room = new Room()
-  return {
-    type: ADD_ROOM,
-    payload: {room}
+export function addRoom (props, floorplanId) {
+  const room = new Room(props)
+  return dispatch => {
+    dispatch({
+      type: ADD_ROOM,
+      payload: room
+    })
+
+    if (floorplanId) {
+      dispatch(updateFloorPlan(floorplanId, {
+        rooms: [['add', room.id]]
+      }))
+    }
   }
 }
 
-export function deleteRoom (id, roomId) {
-  return {
-    type: DELETE_ROOM,
-    payload: {roomId}
+export function deleteRoom (roomId, floorplanId) {
+  return dispatch => {
+    dispatch({
+      type: DELETE_ROOM,
+      payload: roomId
+    })
+
+    if (floorplanId) {
+      dispatch(updateFloorPlan(floorplanId, {
+        rooms: [['delete', roomId]]
+      }))
+    }
   }
 }
 

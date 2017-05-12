@@ -1,5 +1,5 @@
 export default class Screenshot {
-  constructor (props) {
+  constructor (props = {}) {
     this.fileName = props.fileName || undefined
     this.id = props.id || `screenshot-${Date.now()}`
     this.matrix = props.matrix || []

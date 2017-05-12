@@ -1,5 +1,5 @@
 export default class Hotspot {
-  constructor (props) {
+  constructor (props = {}) {
     this.dimensions = props.dimensions || {}
     this.id = props.id || `hotspot-${Date.now()}`
     this.matrix = props.matrix || []

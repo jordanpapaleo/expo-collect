@@ -1,5 +1,5 @@
 export default class Room {
-  constructor (props) {
+  constructor (props = {}) {
     this.captures = props.captures || []
     this.dimensions = props.dimensions || {}
     this.id = props.id || `room-${Date.now()}`

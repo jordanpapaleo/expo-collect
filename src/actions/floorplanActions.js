@@ -6,7 +6,7 @@ import {
   UPDATE_FLOORPLAN
 } from '../constants/actionTypes'
 
-export function newFloorPlan () {
+export function addFloorPlan () {
   const floorplan = new Floorplan()
 
   return [
