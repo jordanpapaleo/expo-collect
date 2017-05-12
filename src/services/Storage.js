@@ -1,6 +1,5 @@
 import {AsyncStorage} from 'react-native'
 
-
 export default class Storage {
   static appKey = '@cc-karma'
   cache = {}
