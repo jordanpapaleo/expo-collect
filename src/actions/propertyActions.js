@@ -7,9 +7,8 @@ import {
   ADD_CLOUD_PROPERTIES,
   DELETE_LOCAL_PROPERTY,
   PROPERTY_XFER_COMPLETE,
-  // REMOVE_CLOUD_PROPERTY,
   PROPERTY_XFER_START,
-  NEW_LOCAL_PROPERTY
+  ADD_LOCAL_PROPERTY
 } from '../constants/actionTypes'
 
 export function newProperty () {
@@ -76,7 +75,7 @@ export function downloadProperty (propertyId) {
         //   payload: propertyId
         // })
         dispatch({
-          type: NEW_LOCAL_PROPERTY,
+          type: ADD_LOCAL_PROPERTY,
           payload: propertyId
         })
         dispatch({

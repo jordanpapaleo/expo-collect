@@ -5,7 +5,9 @@ import {
   SET_ROOMS,
   UPDATE_ROOM
 } from '../constants/actionTypes'
+import listUtils from '../services/listUtils'
 
+// Array of Room ()
 const initialState = []
 
 export default function room (state = initialState, action) {
@@ -30,11 +32,20 @@ function addRoom (state, room) {
   return rooms
 }
 
-function updateRoom (state, roomUpdate) {
+function updateRoom (state, payload) {
+  const {roomId, updates} = payload
   const rooms = cloneDeep(state)
-  const i = rooms.findIndex(room => room.id === roomUpdate.id)
-  rooms[i] = roomUpdate
-  return rooms
+  const room = rooms.find(room => room.id === roomId)
+
+  if (room && updates) {
+    Object.keys(updates).forEach((key) => {
+      if (key === 'captures') {
+        room[key] = listUtils.update(room[key], updates[key])
+      } else {
+        room[key] = updates[key]
+      }
+    })
+  }
 }
 
 function deleteRoom (state, id) {

@@ -3,6 +3,11 @@ import Main from './src/components/Main'
 import {configureStore} from './src/store'
 import {Provider} from 'react-redux'
 import sampleData from './sampleData'
+import Floorplan from './src/models/Floorplan'
+import Capture from './src/models/Capture'
+import Room from './src/models/Room'
+import Hotspot from './src/models/Hotspot'
+import Screenshot from './src/models/Screenshot'
 
 const initialState = {
   app: {
@@ -15,11 +20,11 @@ const initialState = {
       autoSave: true
     }
   },
-  floorplans: sampleData.floorplans,
-  rooms: sampleData.rooms,
-  captures: sampleData.captures,
-  hotspots: sampleData.hotspots,
-  screenshots: sampleData.screenshots
+  floorplans: sampleData.floorplans.map(floorplan => new Floorplan(floorplan)),
+  rooms: sampleData.rooms.map(room => new Room(room)),
+  captures: sampleData.captures.map(capture => new Capture(capture)),
+  hotspots: sampleData.hotspots.map(hotspot => new Hotspot(hotspot)),
+  screenshots: sampleData.screenshots.map(screenshot => new Screenshot(screenshot))
 }
 
 console.log('initialState', initialState)

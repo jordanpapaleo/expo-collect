@@ -1,21 +1,19 @@
 import cloneDeep from 'lodash/cloneDeep'
 import {
-  ADD_BLUR,
+  ADD_HOTSPOT,
   DELETE_HOTSPOT,
-  EDIT_BLUR,
-  HOTSPOT
+  UPDATE_HOTSPOT
 } from '../constants/actionTypes'
 
+// Array of Hotspot ()
 const initialState = []
 
 export default function hotspots (state = initialState, action) {
   switch (action.type) {
-    case HOTSPOT:
+    case ADD_HOTSPOT:
       return addHotspot(state, action.payload)
-    case ADD_BLUR:
-      return addBlur(state, action.payload)
-    case EDIT_BLUR:
-      return editBlur(state, action.payload)
+    case UPDATE_HOTSPOT:
+      return updateHotspot(state, action.payload)
     case DELETE_HOTSPOT:
       return deleteHotspot(state, action.payload)
     default:
@@ -25,50 +23,25 @@ export default function hotspots (state = initialState, action) {
 
 function addHotspot (state, payload) {
   const hotspots = cloneDeep(state)
+  hotspots.push(payload.hotspot)
+  return hotspots
+}
+
+function updateHotspot (state, payload) {
+  const {hotspotId, updates} = payload
+  const hotspots = cloneDeep(state)
+  const hotspot = hotspots.find(hotspot => hotspot.id === hotspotId)
+
+  if (hotspot && updates) {
+    Object.keys(updates).forEach((key) => {
+      hotspot[key] = updates[key]
+    })
+  }
+
+  return hotspots
 }
 
 function deleteHotspot (state, payload) {
   const hotspots = cloneDeep(state)
-}
-
-function addBlur (state, payload) {
-  const rooms = cloneDeep(state)
-  const {captureId, blur} = payload
-  const capture = getCaptureById(captureId, rooms)
-
-  capture.blurs = capture.blurs || []
-  capture.blurs.push(blur)
-
-  return rooms
-}
-
-function editBlur (state, payload) {
-  const rooms = cloneDeep(state)
-  const {captureId, blurId, updates} = payload
-  const capture = getCaptureById(captureId, rooms)
-  const blur = capture.blurs.find(blur => blur.id === blurId)
-
-  Object.keys(updates).forEach((key) => {
-    blur[key] = updates[key]
-  })
-
-  return rooms
-}
-
-function addHotspot (state, payload) {
-  const rooms = cloneDeep(state)
-  const capture = getCaptureById(payload.captureId, rooms)
-
-  capture.hotspots = capture.hotspots || []
-  capture.hotspots.push(payload.hotspot)
-
-  return rooms
-}
-
-function deleteHotspot (state, payload) {
-  // TODO
-}
-
-function getCaptureById (captureId, rooms) {
-  return rooms.find(room => room.captures.some(capture => capture.id === captureId))
+  return hotspots.filter(hotspot => hotspot.id !== payload.hotspotId)
 }

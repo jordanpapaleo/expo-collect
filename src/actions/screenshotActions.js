@@ -3,7 +3,7 @@ import {
   DELETE_SCREENSHOT
 } from '../constants/actionTypes'
 
-export function saveScreenshot (roomId, screenshot) {
+export function addScreenshot (roomId, screenshot) {
   return (dispatch, getState) => {
     const state = getState()
     const {id: propertyId} = state
@@ -68,6 +68,10 @@ export function saveScreenshot (roomId, screenshot) {
       //   })
     }, 0)
   }
+}
+
+export function updateScreenshot () {
+  
 }
 
 export function deleteScreenshot (roomId, screenshot) {

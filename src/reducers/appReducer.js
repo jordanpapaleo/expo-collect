@@ -4,9 +4,9 @@ import {
   ACTIVE_FLOORPLAN,
   ACTIVE_HOTSPOT,
   ACTIVE_ROOM,
+  ACTIVE_ROTATION,
   LOADING,
   RESET_APP,
-  ROTATION,
   SETTING_AUTO_SAVE,
   SETTING_INVERT_CONTROLS
 } from '../constants/actionTypes'
@@ -52,7 +52,7 @@ export default function app (state = initialState, action) {
         ...cloneDeep(state),
         activeRoomId: action.payload
       }
-    case ROTATION:
+    case ACTIVE_ROTATION:
       return {
         ...cloneDeep(state),
         cameraRotation: action.payload
