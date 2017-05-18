@@ -6,8 +6,8 @@
   "scripts": {
     "start": "react-native-scripts start",
     "eject": "react-native-scripts eject",
-    "android": "react-native-scripts android",
-    "ios": "react-native-scripts ios",
+    "dev:android": "react-native-scripts android",
+    "dev:ios": "react-native-scripts ios",
     "test": "npm run test:lint; npm run test:unit",
     "test:lint": "./node_modules/.bin/eslint . --color",
     "test:unit": "./node_modules/.bin/jest  --verbose src/components/Main/Main.test.js",
