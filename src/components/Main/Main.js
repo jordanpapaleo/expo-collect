@@ -12,7 +12,7 @@ import {
   TestHotspots,
   TestRooms,
   TestScreenShots,
-  TestView
+  TestThreeJS
 } from '../TestView'
 import {getCameraInfo, takePicture} from '../../actions/cameraActions'
 import {propertyStore} from '../../services/localStorage'
@@ -56,7 +56,7 @@ class MainComponent extends Component {
 
   goPlaces = () => {
     const {navigate} = this.props.navigation
-    navigate('Test')
+    navigate('TestThreeJS')
   }
 
   render () {
@@ -65,17 +65,13 @@ class MainComponent extends Component {
 
     return (
       <View style={this.styles.container}>
-        <View style={{display: 'flex', flexDirection: 'row'}}>
-          <Button cb={this.goPlaces}>Go View</Button>
+        <View style={{display: 'flex', flexDirection: 'column'}}>
+          <Button cb={this.goPlaces}>ThreeJS</Button>
           <Button cb={() => { navigate('TestFloorPlans') }}>Floorplans</Button>
           <Button cb={() => { navigate('TestRooms') }}>Rooms</Button>
-        </View>
-        <View style={{display: 'flex', flexDirection: 'row'}}>
           <Button cb={() => { navigate('TestCaptures') }}>Captures</Button>
           <Button cb={() => { navigate('TestHotspots') }}>Hotspots</Button>
           <Button cb={() => { navigate('TestScreenShots') }}>Screenshots</Button>
-        </View>
-        <View style={{display: 'flex', flexDirection: 'row'}}>
           <Button cb={getCameraInfo}>Get Camera Info</Button>
           <Button cb={takePicture}>Take Picture</Button>
         </View>
@@ -86,7 +82,7 @@ class MainComponent extends Component {
 
 const Main = StackNavigator({
   Home: {screen: MainComponent},
-  Test: {screen: TestView},
+  TestThreeJS: {screen: TestThreeJS},
   TestCaptures: {screen: TestCaptures},
   TestFloorPlans: {screen: TestFloorPlans},
   TestHotspots: {screen: TestHotspots},
