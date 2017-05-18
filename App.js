@@ -27,6 +27,7 @@ const initialState = {
   screenshots: sampleData.screenshots.map(screenshot => new Screenshot(screenshot))
 }
 // console.log(JSON.stringify(initialState, null, 2))
+console.ignoredYellowBox = ['Remote debugger', 'Warning', 'THREE']
 
 const store = configureStore(initialState)
 const App = () => (
