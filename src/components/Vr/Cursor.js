@@ -10,7 +10,7 @@ const {
 } = THREE
 
 const DEFAULT_CURSOR = function () {
-  const geometry = new RingGeometry(0.0075, 0.01, 32)
+  const geometry = new RingGeometry(1, 1, 32)
   const material = new MeshBasicMaterial({
     color: 0xffff00,
     side: THREE.DoubleSide
@@ -18,8 +18,8 @@ const DEFAULT_CURSOR = function () {
 
   const ring = new Mesh(geometry, material)
   ring.material.transparent = true
-  ring.material.opacity = 0.5
-  ring.position.z = -0.3
+  ring.material.opacity = 1
+  ring.position.z = -1
   return ring
 }
 
@@ -100,6 +100,7 @@ export default class Cursor {
     } else if (fuzeTarget === mesh) {
       onFuzing(lastCollisionTime)
     } else {
+      // This will occur when moving from overlapping fuseTargets
       onFuzeEnd()
     }
   }
@@ -109,8 +110,10 @@ export default class Cursor {
       fuzeTarget: mesh,
       fuzeStartTime: lastCollisionTime
     }, (newState) => {
-      if (newState.fuzeTarget.onFuzing instanceof Function) {
-        newState.fuzeTarget.onFuzing()
+      const {fuzeTarget} = newState
+
+      if (fuzeTarget.onFuzing instanceof Function) {
+        fuzeTarget.onFuzing()
       }
     })
   }
@@ -119,18 +122,29 @@ export default class Cursor {
     const {fuzeStartTime, fuzeTarget} = this.state
     const {fuzeTimeout} = this.props
 
-    // Fuze time has exceeded the timeout
+    if (fuzeTarget.fuzed) {
+      return
+    }
+
+    // Fuze time has exceeded the timeout and is Fused
     if ((lastCollisionTime - fuzeStartTime) >= fuzeTimeout) {
+      fuzeTarget.fuzed = true
+
       if (fuzeTarget.onFuzed instanceof Function) {
         fuzeTarget.onFuzed()
       }
     } else {
-      fuzeTarget.onFuzing()
+      // Its still fusing
+      if (fuzeTarget.onFusing instanceof Function) {
+        fuzeTarget.onFusing()
+      }
     }
   }
 
   onFuzeEnd = () => {
     const {fuzeTarget} = this.state
+    delete fuzeTarget.fuzed
+
     if (fuzeTarget && fuzeTarget.onFuzeEnd instanceof Function) {
       fuzeTarget.onFuzeEnd()
     }
