@@ -1,10 +1,10 @@
-import {NOTIFICATION, CLEAR_NOTIFICATIONS, DISMISS_NOTIFICATION, UPDATE_NOTIFICATION} from '../constants/actionTypes'
+import {ADD_NOTIFICATION, CLEAR_NOTIFICATIONS, DISMISS_NOTIFICATION, UPDATE_NOTIFICATION} from '../constants/actionTypes'
 
 export function addNotification ({type, title, message, error}) {
   const id = `${title.replace(/\s/g, '')}-${Date.now()}`
 
   return {
-    type: NOTIFICATION,
+    type: ADD_NOTIFICATION,
     payload: {id, message, title, type, error}
   }
 }
